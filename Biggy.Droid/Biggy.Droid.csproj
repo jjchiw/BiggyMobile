@@ -112,9 +112,5 @@
       <Project>{3D65ED91-B172-43C1-8534-5F6951DE9324}</Project>
       <Name>Biggy.Xamarin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Biggy.Pcl\Biggy.Interface.csproj">
-      <Project>{2E9D0AF5-410F-47EB-9767-C3A04FD5F96C}</Project>
-      <Name>Biggy.Interface</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>
