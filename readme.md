@@ -4,7 +4,7 @@
 - Xamarin
 - Biggy
 
-Its not PCL yet, but it works....
+# Biggy as PCL for Xamarin.Android
 
 # Biggy: A Very Fast Document/Relational Query Tool with Full LINQ Compliance
 
