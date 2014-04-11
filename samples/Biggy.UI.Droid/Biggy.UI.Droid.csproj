@@ -82,13 +82,13 @@
       <HintPath>..\packages\Humanizer.1.19.1\lib\portable-win+net40+sl50+wp8\Humanizer.dll</HintPath>
     </Reference>
     <Reference Include="Biggy.Mobile">
-      <HintPath>..\packages\Biggy.Mobile.0.0.15\lib\MonoAndroid44\Biggy.Mobile.dll</HintPath>
+      <HintPath>..\packages\Biggy.Mobile.0.0.17\lib\MonoAndroid44\Biggy.Mobile.dll</HintPath>
     </Reference>
     <Reference Include="Biggy.Mobile.Droid">
-      <HintPath>..\packages\Biggy.Mobile.0.0.15\lib\MonoAndroid44\Biggy.Mobile.Droid.dll</HintPath>
+      <HintPath>..\packages\Biggy.Mobile.0.0.17\lib\MonoAndroid44\Biggy.Mobile.Droid.dll</HintPath>
     </Reference>
     <Reference Include="BiggySamples.Core">
-      <HintPath>..\packages\BiggySamples.Core.0.0.11\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\BiggySamples.Core.dll</HintPath>
+      <HintPath>..\packages\BiggySamples.Core.0.0.12\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\BiggySamples.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

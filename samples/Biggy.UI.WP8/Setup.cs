@@ -5,6 +5,7 @@ using Cirrious.MvvmCross.ViewModels;
 using Cirrious.MvvmCross.WindowsPhone.Platform;
 using Microsoft.Phone.Controls;
 using System;
+using System.Threading.Tasks;
 
 namespace Biggy.UI.WP8
 {
@@ -16,9 +17,15 @@ namespace Biggy.UI.WP8
 
         protected override IMvxApplication CreateApp()
         {
-            var store = new JsonStore<Product>();
-            var list = new BiggyList<Product>(store);
-            BiggySamples.Core.Services.DataContext.Products = list;
+            BiggySamples.Core.Services.DataContext.Products = new BiggyList<Product>(new JsonStore<Product>());
+
+            Task.Factory.StartNew(async () =>
+            {
+                await BiggySamples.Core.Services.DataContext.Products.LoadItemsAsync();
+            });
+            
+
+
             return new BiggySamples.Core.App();
         }
 		

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Biggy
 {
@@ -14,6 +15,9 @@ namespace Biggy
         T Add(T item);
         List<T> Add(List<T> items);
         IQueryable<T> AsQueryable();
+
+		bool LoadItems ();
+		Task<bool> LoadItemsAsync ();
 
 		event EventHandler<IBiggyEventArgs<T>> ItemRemoved;
 		event EventHandler<IBiggyEventArgs<T>> ItemAdded;

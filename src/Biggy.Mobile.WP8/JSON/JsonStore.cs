@@ -18,6 +18,7 @@ namespace Biggy.JSON
         internal List<T> _items;
         public bool InMemory { get; set; }
         StorageFolder _dataFolder;
+        StorageFolder _localFolder;
         string _dbFileName;
         string _dbName;
 
@@ -37,22 +38,25 @@ namespace Biggy.JSON
 
             jsSettings = new JsonSerializerSettings();
             jsSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
-            CreateOrOpenFolder();
         }
 
-        private async void CreateOrOpenFolder()
+        private async Task CreateOrOpenFolder()
         {
-            // Get the local folder.
-            var local = Windows.Storage.ApplicationData.Current.LocalFolder;
+            if (_localFolder != null && _dataFolder != null)
+                return;
 
-            // Create a new folder name DataFolder.
-            _dataFolder = await local.CreateFolderAsync("data", CreationCollisionOption.OpenIfExists);
+            _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            _dataFolder = await _localFolder.CreateFolderAsync("db_"+_dbName, CreationCollisionOption.OpenIfExists);
             await _dataFolder.CreateFileAsync(_dbFileName, CreationCollisionOption.OpenIfExists);
+
+            return;
         }
+       
         #region IBiggyStore
         public async Task<T> AddItemAsync(T item)
         {
+            await CreateOrOpenFolder();
+
             var json = string.Concat(JsonConvert.SerializeObject(item, jsSettings), Environment.NewLine);
 
             var bytes = Encoding.UTF8.GetBytes(json);
@@ -68,28 +72,24 @@ namespace Biggy.JSON
 
         public async Task<List<T>> TryLoadFileDataAsync(string path)
         {
+            await CreateOrOpenFolder();
+
             List<T> result = new List<T>();
-            StorageFile file = null;
-            try
-            {
-                file = await _dataFolder.GetFileAsync(path);
-            }
-            catch { }
-            if (file != null)
-            {
-                //format for the deserializer...
-                var stream = await file.OpenStreamForReadAsync();
+            StorageFile file = await _dataFolder.GetFileAsync(path);
 
-                var dataText = "";
-                // Read the data.
-                using (StreamReader streamReader = new StreamReader(stream))
-                {
-                    dataText = streamReader.ReadToEnd();
-                }
+            //format for the deserializer...
+            var stream = await file.OpenStreamForReadAsync();
 
-                string json = "[" + dataText.Replace(Environment.NewLine, ",") + "]";
-                result = JsonConvert.DeserializeObject<List<T>>(json);
+            var dataText = "";
+            // Read the data.
+            using (StreamReader streamReader = new StreamReader(stream))
+            {
+                dataText = streamReader.ReadToEnd();
             }
+
+            string json = "[" + dataText.Replace(Environment.NewLine, ",") + "]";
+            result = JsonConvert.DeserializeObject<List<T>>(json);
+
             _items = result.ToList();
             if (ReferenceEquals(_items, result))
             {
@@ -98,8 +98,12 @@ namespace Biggy.JSON
             return result;
         }
 
+
+
         public async Task<bool> FlushToDiskAsync()
         {
+            await CreateOrOpenFolder();
+
             var completed = false;
             // Serialize json directly to the output stream
             using (Stream stream = await _dataFolder.OpenStreamForWriteAsync(_dbFileName, CreationCollisionOption.OpenIfExists))
@@ -117,6 +121,8 @@ namespace Biggy.JSON
 
         public async Task<List<T>> AddRangeAsync(List<T> items)
         {
+            await CreateOrOpenFolder();
+
             using (Stream f = await _dataFolder.OpenStreamForWriteAsync(_dbFileName, CreationCollisionOption.OpenIfExists))
             {
                 f.Seek(0, SeekOrigin.End);
@@ -183,7 +189,7 @@ namespace Biggy.JSON
         public void SaveAllAsync(List<T> items)
         {
             throw new NotImplementedException();
-        } 
+        }
         #endregion
 
 
@@ -246,7 +252,7 @@ namespace Biggy.JSON
         public Task<T> UpdateAsync(T item)
         {
             return UpdateItemAsync(item);
-        } 
+        }
         #endregion
 
         public IQueryable<T> AsQueryable()

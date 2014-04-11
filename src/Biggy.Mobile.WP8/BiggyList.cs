@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Biggy
 {
@@ -17,12 +18,17 @@ namespace Biggy
             _store = store;
             _queryableStore = _store as IQueryableBiggyStore<T>;
             _updateableBiggyStore = _store as IUpdateableBiggyStore<T>;
-            LoadItems();
         }
 
-        private async void LoadItems()
+        public async Task<bool> LoadItemsAsync()
         {
             _items = await _store.LoadAsync();
+            return true;
+        }
+
+        public bool LoadItems()
+        {
+            throw new NotImplementedException();
         }
 
         public virtual IEnumerator<T> GetEnumerator()
@@ -37,7 +43,7 @@ namespace Biggy
 
         public virtual void Clear()
         {
-            _store.ClearAsync();
+            _store.ClearAsync().Wait();
             _items.Clear();
             Fire(Changed, items: null);
         }
@@ -95,7 +101,7 @@ namespace Biggy
 
         public virtual T Add(T item)
         {
-            _store.AddAsync(item);
+            _store.AddAsync(item).Wait();
             _items.Add(item);
             Fire(ItemAdded, item: item);
             return item;
@@ -103,7 +109,7 @@ namespace Biggy
 
         public virtual List<T> Add(List<T> items)
         {
-            _store.AddAsync(items);
+            _store.AddAsync(items).Wait();
             _items.AddRange(items);
             //foreach (var item in items)
             //{

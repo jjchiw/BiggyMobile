@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Biggy {
   public class BiggyList<T> : IBiggy<T> where T : new() {
@@ -16,6 +17,17 @@ namespace Biggy {
       _updateableBiggyStore = _store as IUpdateableBiggyStore<T>;
       _items = _store.Load();
     }
+
+	public async Task<bool> LoadItemsAsync()
+	{
+		throw new NotImplementedException();
+	}
+
+	public bool LoadItems()
+	{
+		_items =_store.Load();
+		return true;
+	}
 
     public virtual IEnumerator<T> GetEnumerator() {
       return _items.GetEnumerator();
