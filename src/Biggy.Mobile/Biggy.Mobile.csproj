@@ -31,7 +31,7 @@
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="PowerShell -NoProfile -ExecutionPolicy Bypass -Command &quot;&amp; '$(ProjectDir)\PostBuildScripts\BuildNewPackage-RanAutomatically.ps1' -ProjectFilePath '$(ProjectFile)' -OutputDirectory 'C:\Users\JuanJ\Documents\manray\src\nuget-repo' -Configuration '$(ProjectConfigName)' -Platform 'AnyCPU'&quot;" workingdir="${TargetDir}" externalConsole="True" pauseExternalConsole="True" />
+        <Command type="AfterBuild" command="PowerShell -NoProfile -ExecutionPolicy Bypass -Command &quot;&amp; '$(ProjectDir)\PostBuildScripts\BuildNewPackage-RanAutomatically.ps1' -ProjectFilePath '$(ProjectFile)' -OutputDirectory 'C:\Users\JuanJ\Documents\manray\src\nuget-repo' -Configuration '$(ProjectConfigName)' -Platform 'AnyCPU'&quot;" workingdir="${TargetDir}" pauseExternalConsole="True" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

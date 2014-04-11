@@ -8,12 +8,14 @@
         <description>Description</description>
         <releaseNotes>Testing pcl libraries</releaseNotes>
         <dependencies>
-            <dependency id="Humanizer" version="1.16.4" />
+            <dependency id="Humanizer" version="1.19.1" />
             <dependency id="Newtonsoft.Json" version="6.0.2" />
         </dependencies>
     </metadata>
 	<files>
 		<file src="..\Biggy.Mobile.Droid\bin\Release\Biggy.Mobile.Droid.dll" target="lib\MonoAndroid44\Biggy.Mobile.Droid.dll" />
 		<file src="..\Biggy.Mobile.Droid\bin\Release\Biggy.Mobile.dll" target="lib\MonoAndroid44\Biggy.Mobile.dll" />
+		<file src="..\Biggy.Mobile.WP8\bin\Release\Biggy.Mobile.WP8.dll" target="lib\wp80\Biggy.Mobile.WP8.dll" />
+		<file src="..\Biggy.Mobile.WP8\bin\Release\Biggy.Mobile.dll" target="lib\wp80\Biggy.Mobile.dll" />
 	</files>
 </package>

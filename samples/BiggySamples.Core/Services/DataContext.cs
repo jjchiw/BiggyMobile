@@ -1,7 +1,8 @@
 ﻿using System;
 using BiggySamples.Core.ViewModels;
+using Biggy;
 
-namespace Biggy.Core.Services
+namespace BiggySamples.Core.Services
 {
 	public class DataContext
 	{

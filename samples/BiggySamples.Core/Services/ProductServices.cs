@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Biggy.Core.Services
+namespace BiggySampes.Core.Services
 {
 	public class ProductServices
 	{

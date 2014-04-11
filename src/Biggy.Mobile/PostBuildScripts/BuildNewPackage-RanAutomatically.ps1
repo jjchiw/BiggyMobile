@@ -30,7 +30,7 @@ $OutputDirectory = $OutputDirectory.TrimEnd('\')
 #################################################
 
 # Specify the version number to use for the NuGet package. If not specified the version number of the assembly being packed will be used.
-$versionNumber = "0.0.2-pre"
+$versionNumber = "0.0.15"
 
 # Specify any release notes for this package. 
 # These will only be included in the package if you have a .nuspec file for the project in the same directory as the project file.

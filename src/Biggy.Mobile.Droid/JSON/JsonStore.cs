@@ -40,11 +40,11 @@ namespace Biggy.JSON
 				this.DbName = dbName.ToLower();
 			}
 			this.DbFileName = this.DbName + ".json";
-			this.SetDataDirectory(Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments));
 
-			jsSettings = new JsonSerializerSettings();
+            this.SetDataDirectory(Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments));
+
+ 			jsSettings = new JsonSerializerSettings();
 			jsSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-			//_items = this.TryLoadFileData(this.DbPath);
 		}
 
 		public void SetDataDirectory(string dbPath) {
@@ -59,8 +59,8 @@ namespace Biggy.JSON
 			List<T> result = new List<T>();
 			if (File.Exists(path)) {
 				//format for the deserializer...
-				var json = "[" + File.ReadAllText(path).Replace(Environment.NewLine, ",") + "]";
-				result = JsonConvert.DeserializeObject<List<T>>(json);
+                var json = "[" + File.ReadAllText(path).Replace(Environment.NewLine, ",") + "]";
+                result = JsonConvert.DeserializeObject<List<T>>(json);
 			}
 			_items = result.ToList();
 			if (ReferenceEquals(_items, result)) {
@@ -68,7 +68,7 @@ namespace Biggy.JSON
 			}
 			return result;
 		}
-
+			
 		public T AddItem(T item) {
 			var json = JsonConvert.SerializeObject(item, jsSettings);
 			//append the to the file
@@ -144,47 +144,112 @@ namespace Biggy.JSON
 		//  return completed;
 		//}
 
-		// IBIGGYSTORE IMPLEMENTATION:
+		#region IBiggyStore implementation
 
-		List<T> IBiggyStore<T>.Load() {
+		public List<T> Load ()
+		{
 			_items = new List<T>();
 			return this.TryLoadFileData(this.DbPath);
 		}
 
-		void IBiggyStore<T>.SaveAll(List<T> items) {
-			throw new NotImplementedException();
+		public Task<List<T>> LoadAsync ()
+		{
+			return Task.Factory.StartNew<List<T>> (() => {
+				return Load ();
+			});
 		}
 
-		void IBiggyStore<T>.Clear() {
+		public void SaveAll (List<T> items)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void SaveAllAsync (List<T> items)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void Clear ()
+		{
 			_items = new List<T>();
 			this.FlushToDisk();
 		}
 
-		T IBiggyStore<T>.Add(T item) {
+		public Task<bool> ClearAsync()
+		{
+			return Task.Factory.StartNew<bool> (() => {
+				return FlushToDisk ();
+			});
+		}
+
+		public T Add (T item)
+		{
 			return this.AddItem(item);
 		}
 
-		List<T> IBiggyStore<T>.Add(List<T> items) {
+		public Task<T> AddAsync (T item)
+		{
+			return Task.Factory.StartNew<T> (() => {
+				return Add(item);
+			});
+		}
+
+		public List<T> Add (List<T> items)
+		{
 			return this.AddRange(items);
 		}
 
-		// IUPDATEABLEBIGGYSTORE IMPLEMENTATION:
-
-		T IUpdateableBiggyStore<T>.Update(T item) {
-			return this.UpdateItem(item);
+		public Task<List<T>> AddAsync (List<T> items)
+		{
+			return Task.Factory.StartNew<List<T>> (() => {
+				return Add(items);
+			});
 		}
 
-		T IUpdateableBiggyStore<T>.Remove(T item) {
-			return this.RemoveItem(item);
+		#endregion
+
+		#region IUpdateableBiggyStore
+
+		public T Update (T item)
+		{
+			return this.UpdateItem (item);
 		}
 
-		List<T> IUpdateableBiggyStore<T>.Remove(List<T> items) {
-			return this.RemoveRange(items);
+		public Task<T> UpdateAsync (T item)
+		{
+			return Task.Factory.StartNew<T> (() => { 
+				return Update (item); 
+			});
 		}
 
-		// IQUERYABLESTORE IMPLEMENTATION:
+		public T Remove (T item)
+		{
+			return this.RemoveItem (item);
+		}
 
-		IQueryable<T> IQueryableBiggyStore<T>.AsQueryable() {
+		public Task<T> RemoveAsync (T item)
+		{
+			return Task.Factory.StartNew<T> (() => {
+				return Remove (item);
+			});
+		}
+
+		public List<T> Remove (List<T> items)
+		{
+			return this.RemoveRange (items);
+		}
+
+		public Task<List<T>> RemoveAsync (List<T> items)
+		{
+			return Task.Factory.StartNew<List<T>> (() => {
+				return Remove (items);
+			});
+		}
+
+		#endregion
+
+		public IQueryable<T> AsQueryable ()
+		{
 			return _items.AsQueryable();
 		}
 	}

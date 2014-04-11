@@ -2,8 +2,8 @@ using Android.Content;
 using Cirrious.CrossCore.Platform;
 using Cirrious.MvvmCross.Droid.Platform;
 using Cirrious.MvvmCross.ViewModels;
-using Biggy.Core.Services;
 using Biggy.JSON;
+using BiggySamples.Core.Services;
 
 namespace Biggy.UI.Droid
 {
@@ -15,7 +15,7 @@ namespace Biggy.UI.Droid
 
         protected override IMvxApplication CreateApp()
         {
-			Core.Services.DataContext.Products = new BiggyList<Product> (new JsonStore<Product> ());
+			BiggySamples.Core.Services.DataContext.Products = new BiggyList<Product> (new JsonStore<Product> ());
 
 			return new BiggySamples.Core.App ();
         }

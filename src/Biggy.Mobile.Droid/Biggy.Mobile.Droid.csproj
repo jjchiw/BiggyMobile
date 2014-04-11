@@ -45,8 +45,11 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Biggy.Mobile">
+      <HintPath>..\Biggy.Mobile\bin\Release\Biggy.Mobile.dll</HintPath>
+    </Reference>
     <Reference Include="Humanizer">
-      <HintPath>..\packages\Humanizer.1.16.4\lib\portable-win+net40+sl50+wp8\Humanizer.dll</HintPath>
+      <HintPath>..\packages\Humanizer.1.19.1\lib\portable-win+net40+sl50+wp8\Humanizer.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
@@ -59,11 +62,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Biggy.Mobile\Biggy.Mobile.csproj">
-      <Project>{2E9D0AF5-410F-47EB-9767-C3A04FD5F96C}</Project>
-      <Name>Biggy.Mobile</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

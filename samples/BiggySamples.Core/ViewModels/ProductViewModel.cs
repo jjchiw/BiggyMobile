@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using System.Diagnostics;
-using Biggy.Core.Services;
 using System.Linq;
 using Biggy;
+using BiggySamples.Core.Services;
+using System.Collections.ObjectModel;
 
 namespace BiggySamples.Core.ViewModels
 {
@@ -16,6 +17,20 @@ namespace BiggySamples.Core.ViewModels
 		{ 
 			get { return _sku; }
 			set { _sku = value; RaisePropertyChanged(() => Sku); }
+		}
+
+		public ProductViewModel ()
+		{
+			_list = new ObservableCollection<Product> ();
+		}
+
+		public override void Start ()
+		{
+			foreach (var product in DataContext.Products) {
+				List.Add (product);
+			}
+
+			base.Start ();
 		}
 
 		private string _name;
@@ -48,9 +63,11 @@ namespace BiggySamples.Core.ViewModels
 			return Sku.GetHashCode ();
 		}
 			
-		public IBiggy<Product> List
+		private ObservableCollection<Product> _list;
+		public ObservableCollection<Product> List
 		{ 
-			get { return DataContext.Products; }
+			get { return _list; }
+			set { _list = value; RaisePropertyChanged(() => List); }
 		}
 
 		MvxCommand _addCommand;
@@ -76,7 +93,9 @@ namespace BiggySamples.Core.ViewModels
 		void DoAddCommand()
 		{
 			Debug.WriteLine ("Doing command");
-			DataContext.Products.Add (this.ToProduct ());
+			var product = this.ToProduct ();
+			DataContext.Products.Add (product);
+			List.Add (product);
 			Sku = "";
 			Name = "";
 			Price = 0.0m;

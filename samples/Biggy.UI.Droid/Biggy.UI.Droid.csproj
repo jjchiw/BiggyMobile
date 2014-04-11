@@ -75,17 +75,20 @@
     <Reference Include="Cirrious.MvvmCross.Droid">
       <HintPath>..\packages\MvvmCross.HotTuna.MvvmCrossLibraries.3.1.1\lib\MonoAndroid\Cirrious.MvvmCross.Droid.dll</HintPath>
     </Reference>
-    <Reference Include="Humanizer">
-      <HintPath>..\packages\Humanizer.1.16.4\lib\portable-win+net40+sl50+wp8\Humanizer.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Humanizer">
+      <HintPath>..\packages\Humanizer.1.19.1\lib\portable-win+net40+sl50+wp8\Humanizer.dll</HintPath>
+    </Reference>
     <Reference Include="Biggy.Mobile">
-      <HintPath>..\packages\Biggy.Mobile.0.0.2-pre\lib\MonoAndroid44\Biggy.Mobile.dll</HintPath>
+      <HintPath>..\packages\Biggy.Mobile.0.0.15\lib\MonoAndroid44\Biggy.Mobile.dll</HintPath>
     </Reference>
     <Reference Include="Biggy.Mobile.Droid">
-      <HintPath>..\packages\Biggy.Mobile.0.0.2-pre\lib\MonoAndroid44\Biggy.Mobile.Droid.dll</HintPath>
+      <HintPath>..\packages\Biggy.Mobile.0.0.15\lib\MonoAndroid44\Biggy.Mobile.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="BiggySamples.Core">
+      <HintPath>..\packages\BiggySamples.Core.0.0.11\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\BiggySamples.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -114,10 +117,4 @@
     <AndroidResource Include="Resources\Layout\product_item_template.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\BiggySamples.Core\BiggySamples.Core.csproj">
-      <Project>{173285D5-17D4-4624-968D-BBA03F29F48D}</Project>
-      <Name>BiggySamples.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
