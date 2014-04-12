@@ -106,7 +106,7 @@ namespace Biggy.JSON
 
             var completed = false;
             // Serialize json directly to the output stream
-            using (Stream stream = await _dataFolder.OpenStreamForWriteAsync(_dbFileName, CreationCollisionOption.OpenIfExists))
+            using (Stream stream = await _dataFolder.OpenStreamForWriteAsync(_dbFileName, CreationCollisionOption.ReplaceExisting))
             using (var outstream = new StreamWriter(stream))
             {
                 var writer = new JsonTextWriter(outstream);
