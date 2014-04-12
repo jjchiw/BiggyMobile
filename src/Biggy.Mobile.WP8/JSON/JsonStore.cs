@@ -46,7 +46,7 @@ namespace Biggy.JSON
                 return;
 
             _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            _dataFolder = await _localFolder.CreateFolderAsync("db_"+_dbName, CreationCollisionOption.OpenIfExists);
+            _dataFolder = await _localFolder.CreateFolderAsync("data", CreationCollisionOption.OpenIfExists);
             await _dataFolder.CreateFileAsync(_dbFileName, CreationCollisionOption.OpenIfExists);
 
             return;

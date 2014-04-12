@@ -43,7 +43,10 @@ namespace Biggy
 
         public virtual void Clear()
         {
-            _store.ClearAsync().Wait();
+            Task.Factory.StartNew(async () =>
+            {
+                await _store.ClearAsync();
+            });
             _items.Clear();
             Fire(Changed, items: null);
         }
@@ -57,7 +60,10 @@ namespace Biggy
         {
             if (_updateableBiggyStore != null)
             {
-                _updateableBiggyStore.Update(item);
+                Task.Factory.StartNew(async () =>
+                {
+                    await _updateableBiggyStore.UpdateAsync(item);
+                });
             }
             else
             {
@@ -71,8 +77,11 @@ namespace Biggy
         {
             _items.Remove(item);
             if (_updateableBiggyStore != null)
-            {
-                _updateableBiggyStore.Remove(item);
+            { 
+                Task.Factory.StartNew(async () =>
+                {
+                    await _updateableBiggyStore.RemoveAsync(item);
+                });
             }
             else
             {
@@ -86,11 +95,15 @@ namespace Biggy
         {
             if (_updateableBiggyStore != null)
             {
+                Task.Factory.StartNew(async () =>
+                {
+                    await _updateableBiggyStore.RemoveAsync(items);
+                });
+
                 foreach (var item in items)
                 {
                     _items.Remove(item);
                 }
-                _updateableBiggyStore.Remove(items);
             }
             else
             {
@@ -101,7 +114,11 @@ namespace Biggy
 
         public virtual T Add(T item)
         {
-            _store.AddAsync(item).Wait();
+            Task.Factory.StartNew(async () =>
+            {
+                await _store.AddAsync(item);
+            });
+            
             _items.Add(item);
             Fire(ItemAdded, item: item);
             return item;
@@ -109,7 +126,10 @@ namespace Biggy
 
         public virtual List<T> Add(List<T> items)
         {
-            _store.AddAsync(items).Wait();
+            Task.Factory.StartNew(async () =>
+            {
+                await _store.AddAsync(items);
+            });
             _items.AddRange(items);
             //foreach (var item in items)
             //{

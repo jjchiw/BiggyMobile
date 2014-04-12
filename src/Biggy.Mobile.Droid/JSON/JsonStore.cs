@@ -31,7 +31,7 @@ namespace Biggy.JSON
 
 		JsonSerializerSettings jsSettings;
 
-		public JsonStore(string dbPath = "current", bool inMemory = false, string dbName = "") {
+		public JsonStore(bool inMemory = false, string dbName = "") {
 			this.InMemory = inMemory;
 			if (String.IsNullOrWhiteSpace(dbName)) {
 				var thingyType = this.GetType().GenericTypeArguments[0].Name;
@@ -49,7 +49,7 @@ namespace Biggy.JSON
 
 		public void SetDataDirectory(string dbPath) {
 			var dataDir = dbPath;
-			dataDir = Path.Combine(dbPath, "Data");
+			dataDir = Path.Combine(dbPath, "data");
 			if(!Directory.Exists(dataDir))
 				Directory.CreateDirectory(dataDir);
 			this.DbDirectory = dataDir;
